@@ -3,8 +3,9 @@ export class note {
     this.title = title;
     this.description = description;
   }
-  editNote() {
-    console.log("edit note");
+  editNote(title, description) {
+    this.title = title;
+    this.description = description;
   }
   removeNote() {
     console.log("remove note");

@@ -10,16 +10,16 @@ export class project {
   removeProject() {
     console.log("remove project");
   }
-  addTask() {
-    console.log("add task");
+  addTask(task) {
+    this.tasks.push(task);
   }
-  removeTask() {
-    console.log("remove task");
+  removeTask(task) {
+    this.tasks.pop(task);
   }
   viewTask() {
     console.log("view task");
   }
-  completeTask() {
-    console.log("complete tasks");
+  completeTask(task) {
+    task.status = !task.status;
   }
 }
