@@ -1,13 +1,10 @@
-export class note {
-  constructor(title, description) {
+export default class note {
+  constructor(title, content) {
     this.title = title;
-    this.description = description;
+    this.content = content;
   }
-  editNote(title, description) {
+  editNote(title, content) {
     this.title = title;
-    this.description = description;
-  }
-  removeNote() {
-    console.log("remove note");
+    this.content = content;
   }
 }

@@ -1,25 +1,22 @@
-export class project {
+import task from "./task";
+export default class project {
   constructor(title) {
     this.title = title;
     this.tasks = [];
   }
-  editProject() {
-    console.log("edit project");
+  editProject(title) {
+    this.title = title;
   }
-
-  removeProject() {
-    console.log("remove project");
-  }
-  addTask(task) {
-    this.tasks.push(task);
+  addTask(title, description, dueDate, priority, stage) {
+    this.tasks.push(new task(title, description, dueDate, priority, stage));
   }
   removeTask(task) {
-    this.tasks.pop(task);
+    this.tasks.splice(task, 1);
   }
   viewTask() {
     console.log("view task");
   }
   completeTask(task) {
-    task.status = !task.status;
+    task.stage = !task.stage;
   }
 }

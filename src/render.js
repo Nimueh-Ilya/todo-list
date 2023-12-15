@@ -1,3 +1,3 @@
-export function render() {
+export default function render() {
   console.log("render");
 }
