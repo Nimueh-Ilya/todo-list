@@ -1,8 +1,6 @@
-import project from "./project";
-import note from "./note";
-export default container();
-
-function container() {
+import { project } from "./project";
+import { note } from "./note";
+export function container() {
   const projectList = [];
   const noteList = [];
   function addProject(title) {
@@ -12,11 +10,19 @@ function container() {
   function removeProject(index) {
     projectList.splice(index, 1);
   }
-  function addNote() {
+  function addNote(title, content) {
     noteList.push(new note(title, content));
   }
   function removeNote(index) {
     noteList.splice(index, 1);
   }
-  return { addNote, addProject, removeNote, removeProject };
+
+  return {
+    addNote,
+    addProject,
+    removeNote,
+    removeProject,
+    projectList,
+    noteList,
+  };
 }
