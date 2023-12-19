@@ -2,6 +2,7 @@ import { note } from "./note";
 import { project, task } from "./project";
 import { myContainer } from "./container";
 const container = myContainer();
+const dialog = document.createElement("dialog");
 export function staticPage() {
   const mainContainer = document.querySelector(".main-container");
   const header = document.createElement("div");
@@ -33,6 +34,8 @@ export function notesPage() {
   newNoteButton.classList.add("new-note", "new-button");
   contentContainer.appendChild(newNoteButton);
   newNoteButton.addEventListener("click", () => {
+    const noteDiv = document.createElement("div");
+    noteDiv.classList.add("nite-div");
     container.addNote("my note", "note content");
   });
 }
@@ -42,6 +45,13 @@ export function projectsPage() {
   newProjectButton.classList.add("new-project", "new-button");
   contentContainer.appendChild(newProjectButton);
   newProjectButton.addEventListener("click", () => {
+    const projectDiv = document.createElement("div");
+    const newTaskButton = document.createElement("button");
+    newTaskButton.classList.add("new-task");
+    projectDiv.classList.add("project-div");
+    projectDiv.appendChild(newTaskButton);
+    contentContainer.appendChild(projectDiv);
+
     container.addProject("Project 1");
   });
 }
