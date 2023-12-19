@@ -1,7 +1,7 @@
 import { note } from "./note";
 import { project, task } from "./project";
-import { container } from "./container";
-
+import { myContainer } from "./container";
+const container = myContainer();
 export function staticPage() {
   const mainContainer = document.querySelector(".main-container");
   const header = document.createElement("div");
@@ -33,7 +33,7 @@ export function notesPage() {
   newNoteButton.classList.add("new-note", "new-button");
   contentContainer.appendChild(newNoteButton);
   newNoteButton.addEventListener("click", () => {
-    container().addNote("my note", "note content");
+    container.addNote("my note", "note content");
   });
 }
 export function projectsPage() {
@@ -42,7 +42,6 @@ export function projectsPage() {
   newProjectButton.classList.add("new-project", "new-button");
   contentContainer.appendChild(newProjectButton);
   newProjectButton.addEventListener("click", () => {
-    container().addProject("my project");
-    console.log(container().projectList);
+    container.addProject("Project 1");
   });
 }

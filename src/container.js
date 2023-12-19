@@ -1,6 +1,6 @@
 import { project } from "./project";
 import { note } from "./note";
-export function container() {
+export const myContainer = function container() {
   const projectList = [];
   const noteList = [];
   function addProject(title) {
@@ -25,4 +25,4 @@ export function container() {
     projectList,
     noteList,
   };
-}
+};
