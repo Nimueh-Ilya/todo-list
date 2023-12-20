@@ -2,7 +2,26 @@ import { note } from "./note";
 import { project, task } from "./project";
 import { myContainer } from "./container";
 const container = myContainer();
-const dialog = document.createElement("dialog");
+function loadDialog(page, dialog) {
+  dialog.appendChild(page);
+  dialog.showModal();
+}
+function noteForm() {
+  const form = document.createElement("form");
+  const titleInput = document.createElement("input");
+  const contentInput = document.createElement("textarea");
+  const submitButton = document.createElement("button");
+  form.method = "dialog";
+  submitButton.type = "submit";
+  form.classList.add("form");
+  titleInput.classList.add("title-iput");
+  contentInput.classList.add("content-input");
+  submitButton.classList.add("submit-button");
+  form.appendChild(titleInput);
+  form.appendChild(contentInput);
+  form.appendChild(submitButton);
+  return form;
+}
 export function staticPage() {
   const mainContainer = document.querySelector(".main-container");
   const header = document.createElement("div");
@@ -11,7 +30,9 @@ export function staticPage() {
   const sideBarNotes = document.createElement("div");
   const sideBarHome = document.createElement("div");
   const sideBarProjects = document.createElement("div");
+  const dialog = document.createElement("dialog");
 
+  dialog.classList.add("content-dialog");
   header.classList.add("header");
   sideBar.classList.add("sidebar");
   contentContainer.classList.add("content-container");
@@ -22,6 +43,7 @@ export function staticPage() {
   sideBar.appendChild(sideBarHome);
   sideBar.appendChild(sideBarProjects);
   sideBar.appendChild(sideBarNotes);
+  mainContainer.appendChild(dialog);
   mainContainer.appendChild(header);
   mainContainer.appendChild(sideBar);
   mainContainer.appendChild(contentContainer);
@@ -30,12 +52,14 @@ export function staticPage() {
 }
 export function notesPage() {
   const contentContainer = document.querySelector(".content-container");
+  const dialog = document.querySelector(".content-dialog");
   const newNoteButton = document.createElement("button");
   newNoteButton.classList.add("new-note", "new-button");
   contentContainer.appendChild(newNoteButton);
   newNoteButton.addEventListener("click", () => {
+    loadDialog(noteForm(), dialog);
     const noteDiv = document.createElement("div");
-    noteDiv.classList.add("nite-div");
+    noteDiv.classList.add("note-div");
     container.addNote("my note", "note content");
   });
 }
@@ -51,7 +75,6 @@ export function projectsPage() {
     projectDiv.classList.add("project-div");
     projectDiv.appendChild(newTaskButton);
     contentContainer.appendChild(projectDiv);
-
     container.addProject("Project 1");
   });
 }
