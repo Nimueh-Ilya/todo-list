@@ -3,6 +3,7 @@ import { project, task } from "./project";
 import { myContainer } from "./container";
 const container = myContainer();
 function loadDialog(page, dialog) {
+  dialog.innerHTML = "";
   dialog.appendChild(page);
   dialog.showModal();
 }
@@ -28,11 +29,12 @@ function projectForm() {
   const submitButton = document.createElement("button");
   form.method = "dialog";
   submitButton.type = "submit";
-  form.classList.add("note-form");
+  form.classList.add("project-form");
   titleInput.classList.add("title-input");
   submitButton.classList.add("submit-button");
   form.appendChild(titleInput);
   form.appendChild(submitButton);
+  submitButton.addEventListener("click", () => {});
   return form;
 }
 export function staticPage() {
@@ -61,6 +63,9 @@ export function staticPage() {
   mainContainer.appendChild(sideBar);
   mainContainer.appendChild(contentContainer);
 
+  sideBarHome.innerHTML = "home";
+  sideBarNotes.innerHTML = "note";
+  sideBarProjects.innerHTML = "project";
   return mainContainer;
 }
 export function notesPage() {
@@ -71,9 +76,6 @@ export function notesPage() {
   contentContainer.appendChild(newNoteButton);
   newNoteButton.addEventListener("click", () => {
     loadDialog(noteForm(), dialog);
-    const noteDiv = document.createElement("div");
-    noteDiv.classList.add("note-div");
-    container.addNote("my note", "note content");
   });
 }
 export function projectsPage() {
@@ -84,11 +86,5 @@ export function projectsPage() {
   contentContainer.appendChild(newProjectButton);
   newProjectButton.addEventListener("click", () => {
     loadDialog(projectForm(), dialog);
-    const projectDiv = document.createElement("div");
-    const newTaskButton = document.createElement("button");
-    newTaskButton.classList.add("new-task");
-    projectDiv.classList.add("project-div");
-    projectDiv.appendChild(newTaskButton);
-    contentContainer.appendChild(projectDiv);
   });
 }
