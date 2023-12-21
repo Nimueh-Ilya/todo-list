@@ -13,12 +13,25 @@ function noteForm() {
   const submitButton = document.createElement("button");
   form.method = "dialog";
   submitButton.type = "submit";
-  form.classList.add("form");
-  titleInput.classList.add("title-iput");
+  form.classList.add("note-form");
+  titleInput.classList.add("title-input");
   contentInput.classList.add("content-input");
   submitButton.classList.add("submit-button");
   form.appendChild(titleInput);
   form.appendChild(contentInput);
+  form.appendChild(submitButton);
+  return form;
+}
+function projectForm() {
+  const form = document.createElement("form");
+  const titleInput = document.createElement("input");
+  const submitButton = document.createElement("button");
+  form.method = "dialog";
+  submitButton.type = "submit";
+  form.classList.add("note-form");
+  titleInput.classList.add("title-input");
+  submitButton.classList.add("submit-button");
+  form.appendChild(titleInput);
   form.appendChild(submitButton);
   return form;
 }
@@ -65,16 +78,17 @@ export function notesPage() {
 }
 export function projectsPage() {
   const contentContainer = document.querySelector(".content-container");
+  const dialog = document.querySelector(".content-dialog");
   const newProjectButton = document.createElement("button");
   newProjectButton.classList.add("new-project", "new-button");
   contentContainer.appendChild(newProjectButton);
   newProjectButton.addEventListener("click", () => {
+    loadDialog(projectForm(), dialog);
     const projectDiv = document.createElement("div");
     const newTaskButton = document.createElement("button");
     newTaskButton.classList.add("new-task");
     projectDiv.classList.add("project-div");
     projectDiv.appendChild(newTaskButton);
     contentContainer.appendChild(projectDiv);
-    container.addProject("Project 1");
   });
 }
