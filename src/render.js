@@ -43,7 +43,6 @@ function projectForm() {
     container.addProject(titleInput.value);
 
     renderProjects();
-    console.log(container.projectList);
   });
   return form;
 }
@@ -117,7 +116,7 @@ function renderProjects() {
     projectDiv.classList.add("project-div");
     projectTitleDiv.classList.add("project-title-div");
     projectContentDiv.classList.add("project-content-div");
-
+    projectDiv.dataset.index = container.projectList.indexOf(object);
     object.tasks.forEach((element) => {
       const taskDiv = document.createElement("div");
       const taskCheckBox = document.createElement("input");
@@ -129,6 +128,7 @@ function renderProjects() {
 
       taskDiv.appendChild(taskCheckBox);
       taskDiv.appendChild(taskLabel);
+
       projectContentDiv.appendChild(taskDiv);
     });
     projectDiv.appendChild(projectTitleDiv);
@@ -148,9 +148,15 @@ function renderNotes() {
     noteDiv.classList.add("note-div");
     noteTitle.classList.add("note-title");
     noteContent.classList.add("note-content");
+
+    noteDiv.dataset.index = container.noteList.indexOf(object);
+
     noteDiv.appendChild(noteTitle);
     noteDiv.appendChild(noteContent);
     noteContainer.appendChild(noteDiv);
     contentContainer.appendChild(noteContainer);
   });
+}
+function attributeUpdate(element, object, list) {
+  element.dataset.index = content.list.indexOf(object);
 }
