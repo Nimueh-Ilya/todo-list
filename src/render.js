@@ -23,6 +23,7 @@ function noteForm() {
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
     container.addNote(titleInput.value, contentInput.value);
+    renderNotes();
     console.log(container.noteList);
   });
   return form;
@@ -79,10 +80,14 @@ export function staticPage() {
 }
 export function notesPage() {
   const contentContainer = document.querySelector(".content-container");
+  const noteContainer = document.createElement("div");
   const dialog = document.querySelector(".content-dialog");
   const newNoteButton = document.createElement("button");
   newNoteButton.classList.add("new-note", "new-button");
+  noteContainer.classList.add("note-container");
   contentContainer.appendChild(newNoteButton);
+  contentContainer.appendChild(noteContainer);
+  renderNotes();
   newNoteButton.addEventListener("click", () => {
     loadDialog(noteForm(), dialog);
   });
@@ -96,6 +101,7 @@ export function projectsPage() {
   newProjectButton.classList.add("new-project", "new-button");
   contentContainer.appendChild(newProjectButton);
   contentContainer.appendChild(projectContainer);
+  renderProjects();
   newProjectButton.addEventListener("click", () => {
     loadDialog(projectForm(), dialog);
   });
@@ -128,5 +134,23 @@ function renderProjects() {
     projectDiv.appendChild(projectTitleDiv);
     projectDiv.appendChild(projectContentDiv);
     projectContainer.appendChild(projectDiv);
+  });
+}
+function renderNotes() {
+  const noteContainer = document.querySelector(".note-container");
+  const contentContainer = document.querySelector(".content-container");
+  noteContainer.innerHTML = "";
+  container.noteList.forEach((notes) => {
+    const noteDiv = document.createElement("div");
+    const noteTitle = document.createElement("div");
+    const noteContent = document.createElement("div");
+
+    noteDiv.classList.add("note-div");
+    noteTitle.classList.add("note-title");
+    noteContent.classList.add("note-content");
+    noteDiv.appendChild(noteTitle);
+    noteDiv.appendChild(noteContent);
+    noteContainer.appendChild(noteDiv);
+    contentContainer.appendChild(noteContainer);
   });
 }
