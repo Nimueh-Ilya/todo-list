@@ -1,5 +1,3 @@
-import { container } from "./container";
-import { note } from "./note";
 import { staticPage, projectsPage, notesPage } from "./render";
 staticPage();
 const contentContainer = document.querySelector(".content-container");

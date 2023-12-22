@@ -21,6 +21,10 @@ function noteForm() {
   form.appendChild(titleInput);
   form.appendChild(contentInput);
   form.appendChild(submitButton);
+  submitButton.addEventListener("click", () => {
+    container.addNote(titleInput.value, contentInput.value);
+    console.log(container.noteList);
+  });
   return form;
 }
 function projectForm() {
@@ -34,7 +38,12 @@ function projectForm() {
   submitButton.classList.add("submit-button");
   form.appendChild(titleInput);
   form.appendChild(submitButton);
-  submitButton.addEventListener("click", () => {});
+  submitButton.addEventListener("click", () => {
+    container.addProject(titleInput.value);
+
+    renderProjects();
+    console.log(container.projectList);
+  });
   return form;
 }
 export function staticPage() {
@@ -80,11 +89,44 @@ export function notesPage() {
 }
 export function projectsPage() {
   const contentContainer = document.querySelector(".content-container");
+  const projectContainer = document.createElement("div");
   const dialog = document.querySelector(".content-dialog");
   const newProjectButton = document.createElement("button");
+  projectContainer.classList.add("project-container");
   newProjectButton.classList.add("new-project", "new-button");
   contentContainer.appendChild(newProjectButton);
+  contentContainer.appendChild(projectContainer);
   newProjectButton.addEventListener("click", () => {
     loadDialog(projectForm(), dialog);
+  });
+}
+function renderProjects() {
+  const projectContainer = document.querySelector(".project-container");
+  projectContainer.innerHTML = "";
+  container.projectList.forEach((object) => {
+    const projectDiv = document.createElement("div");
+    const projectTitleDiv = document.createElement("div");
+    const projectContentDiv = document.createElement("div");
+
+    projectDiv.classList.add("project-div");
+    projectTitleDiv.classList.add("project-title-div");
+    projectContentDiv.classList.add("project-content-div");
+
+    object.tasks.forEach((element) => {
+      const taskDiv = document.createElement("div");
+      const taskCheckBox = document.createElement("input");
+      const taskLabel = document.createElement("label");
+
+      taskDiv.classList.add("task-div");
+      taskCheckBox.classList.add("task-checkbox");
+      taskLabel.classList.add("task-label");
+
+      taskDiv.appendChild(taskCheckBox);
+      taskDiv.appendChild(taskLabel);
+      projectContentDiv.appendChild(taskDiv);
+    });
+    projectDiv.appendChild(projectTitleDiv);
+    projectDiv.appendChild(projectContentDiv);
+    projectContainer.appendChild(projectDiv);
   });
 }
