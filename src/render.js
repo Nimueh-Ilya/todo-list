@@ -39,12 +39,12 @@ function projectForm() {
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
     container.addProject(titleInput.value);
-
     renderProjects();
   });
+
   return form;
 }
-function taskForm() {
+function taskForm(object) {
   const form = document.createElement("form");
   const titleInput = document.createElement("input");
   const descriptionInput = document.createElement("input");
@@ -62,7 +62,7 @@ function taskForm() {
   submitButton.classList.add("submit-button");
 
   form.method = "dialog";
-  submitButton.type = "submit";
+  submitButton.type = "none";
 
   form.appendChild(titleInput);
   form.appendChild(descriptionInput);
@@ -72,8 +72,17 @@ function taskForm() {
   form.appendChild(submitButton);
 
   submitButton.addEventListener("click", () => {
-    //youre here rn
+    object.addTask(
+      titleInput.value,
+      descriptionInput.value,
+      dueDateInput.value,
+      priorityInput.value,
+      stageInput.value
+    );
+    renderProjects();
+    console.log(container.projectList);
   });
+  return form;
 }
 export function staticPage() {
   const mainContainer = document.querySelector(".main-container");
@@ -129,13 +138,16 @@ export function projectsPage() {
   newProjectButton.classList.add("new-project", "new-button");
   contentContainer.appendChild(newProjectButton);
   contentContainer.appendChild(projectContainer);
-  renderProjects();
+
   newProjectButton.addEventListener("click", () => {
+    console.log("bugged");
     loadDialog(projectForm(), dialog);
+    renderProjects();
   });
 }
-function renderProjects() {
+export function renderProjects() {
   const projectContainer = document.querySelector(".project-container");
+  const dialog = document.querySelector(".content-dialog");
   projectContainer.innerHTML = "";
   container.projectList.forEach((object) => {
     const projectDiv = document.createElement("div");
@@ -150,7 +162,10 @@ function renderProjects() {
 
     projectDiv.dataset.index = container.projectList.indexOf(object);
 
-    newTaskButton.addEventListener("click", () => {});
+    newTaskButton.addEventListener("click", () => {
+      console.log("bug here");
+      loadDialog(taskForm(object), dialog);
+    });
 
     object.tasks.forEach((element) => {
       const taskDiv = document.createElement("div");
