@@ -1,5 +1,3 @@
-import { note } from "./note";
-import { project, task } from "./project";
 import { myContainer } from "./container";
 const container = myContainer();
 function loadDialog(page, dialog) {
@@ -45,6 +43,37 @@ function projectForm() {
     renderProjects();
   });
   return form;
+}
+function taskForm() {
+  const form = document.createElement("form");
+  const titleInput = document.createElement("input");
+  const descriptionInput = document.createElement("input");
+  const dueDateInput = document.createElement("input");
+  const priorityInput = document.createElement("input");
+  const stageInput = document.createElement("input");
+  const submitButton = document.createElement("button");
+
+  form.classList.add("project-form");
+  titleInput.classList.add("title-input");
+  descriptionInput.classList.add("description-input");
+  dueDateInput.classList.add("dueDate-input");
+  priorityInput.classList.add("priority-input");
+  stageInput.classList.add("stage-input");
+  submitButton.classList.add("submit-button");
+
+  form.method = "dialog";
+  submitButton.type = "submit";
+
+  form.appendChild(titleInput);
+  form.appendChild(descriptionInput);
+  form.appendChild(dueDateInput);
+  form.appendChild(priorityInput);
+  form.appendChild(stageInput);
+  form.appendChild(submitButton);
+
+  submitButton.addEventListener("click", () => {
+    //youre here rn
+  });
 }
 export function staticPage() {
   const mainContainer = document.querySelector(".main-container");
@@ -112,11 +141,17 @@ function renderProjects() {
     const projectDiv = document.createElement("div");
     const projectTitleDiv = document.createElement("div");
     const projectContentDiv = document.createElement("div");
+    const newTaskButton = document.createElement("button");
 
     projectDiv.classList.add("project-div");
     projectTitleDiv.classList.add("project-title-div");
     projectContentDiv.classList.add("project-content-div");
+    newTaskButton.classList.add("new-task-button");
+
     projectDiv.dataset.index = container.projectList.indexOf(object);
+
+    newTaskButton.addEventListener("click", () => {});
+
     object.tasks.forEach((element) => {
       const taskDiv = document.createElement("div");
       const taskCheckBox = document.createElement("input");
@@ -131,8 +166,10 @@ function renderProjects() {
 
       projectContentDiv.appendChild(taskDiv);
     });
+
     projectDiv.appendChild(projectTitleDiv);
     projectDiv.appendChild(projectContentDiv);
+    projectDiv.appendChild(newTaskButton);
     projectContainer.appendChild(projectDiv);
   });
 }
