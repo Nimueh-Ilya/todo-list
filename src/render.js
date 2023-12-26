@@ -10,6 +10,9 @@ function noteForm() {
   const titleInput = document.createElement("input");
   const contentInput = document.createElement("textarea");
   const submitButton = document.createElement("button");
+  titleInput.required = true;
+  contentInput.required = true;
+
   form.method = "dialog";
   submitButton.type = "submit";
   form.classList.add("note-form");
@@ -20,9 +23,12 @@ function noteForm() {
   form.appendChild(contentInput);
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
-    container.addNote(titleInput.value, contentInput.value);
-    renderNotes();
-    console.log(container.noteList);
+    if (titleInput.value) {
+      container.addNote(titleInput.value, contentInput.value);
+      renderNotes();
+    } else {
+      return;
+    }
   });
   return form;
 }
@@ -30,6 +36,7 @@ function projectForm() {
   const form = document.createElement("form");
   const titleInput = document.createElement("input");
   const submitButton = document.createElement("button");
+  titleInput.required = true;
   form.method = "dialog";
   submitButton.type = "submit";
   form.classList.add("project-form");
@@ -38,8 +45,12 @@ function projectForm() {
   form.appendChild(titleInput);
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
-    container.addProject(titleInput.value);
-    renderProjects();
+    if (titleInput.value) {
+      container.addProject(titleInput.value);
+      renderProjects();
+    } else {
+      return;
+    }
   });
 
   return form;
@@ -61,6 +72,12 @@ function taskForm(object) {
   stageInput.classList.add("stage-input");
   submitButton.classList.add("submit-button");
 
+  titleInput.required = true;
+  descriptionInput.required = true;
+  dueDateInput.required = true;
+  priorityInput.required = true;
+  stageInput.required = true;
+
   form.method = "dialog";
   submitButton.type = "none";
 
@@ -72,15 +89,18 @@ function taskForm(object) {
   form.appendChild(submitButton);
 
   submitButton.addEventListener("click", () => {
-    object.addTask(
-      titleInput.value,
-      descriptionInput.value,
-      dueDateInput.value,
-      priorityInput.value,
-      stageInput.value
-    );
-    renderProjects();
-    console.log(container.projectList);
+    if (titleInput.value) {
+      object.addTask(
+        titleInput.value,
+        descriptionInput.value,
+        dueDateInput.value,
+        priorityInput.value,
+        stageInput.value
+      );
+      renderProjects();
+    } else {
+      return;
+    }
   });
   return form;
 }
@@ -140,7 +160,6 @@ export function projectsPage() {
   contentContainer.appendChild(projectContainer);
 
   newProjectButton.addEventListener("click", () => {
-    console.log("bugged");
     loadDialog(projectForm(), dialog);
     renderProjects();
   });
@@ -163,7 +182,6 @@ export function renderProjects() {
     projectDiv.dataset.index = container.projectList.indexOf(object);
 
     newTaskButton.addEventListener("click", () => {
-      console.log("bug here");
       loadDialog(taskForm(object), dialog);
     });
 
@@ -176,12 +194,14 @@ export function renderProjects() {
       taskCheckBox.classList.add("task-checkbox");
       taskLabel.classList.add("task-label");
 
+      taskLabel.innerText = element.title;
+
       taskDiv.appendChild(taskCheckBox);
       taskDiv.appendChild(taskLabel);
 
       projectContentDiv.appendChild(taskDiv);
     });
-
+    projectTitleDiv.innerHTML = object.title;
     projectDiv.appendChild(projectTitleDiv);
     projectDiv.appendChild(projectContentDiv);
     projectDiv.appendChild(newTaskButton);
@@ -201,7 +221,10 @@ function renderNotes() {
     noteTitle.classList.add("note-title");
     noteContent.classList.add("note-content");
 
-    noteDiv.dataset.index = container.noteList.indexOf(object);
+    noteDiv.dataset.index = container.noteList.indexOf(notes);
+
+    noteTitle.innerText = notes.title;
+    noteContent.innerText = notes.content;
 
     noteDiv.appendChild(noteTitle);
     noteDiv.appendChild(noteContent);
