@@ -12,8 +12,6 @@ function noteForm() {
   const titleInput = document.createElement("input");
   const contentInput = document.createElement("textarea");
   const submitButton = document.createElement("button");
-  const titleLabel = document.createElement("label");
-  const contentLabel = document.createElement("label");
   titleInput.required = true;
   contentInput.required = true;
 
@@ -23,20 +21,7 @@ function noteForm() {
   titleInput.classList.add("title-input");
   contentInput.classList.add("content-input");
   submitButton.classList.add("submit-button");
-  titleLabel.classList.add("title-label", "form-label");
-  contentLabel.classList.add("content-label", "form-label");
-  titleInput.id = "title";
-  contentInput.id = "content";
-  titleLabel.setAttribute("for", "title");
-  contentLabel.setAttribute("for", "content");
-  contentInput.setAttribute("rows", "20");
-  contentInput.setAttribute("cols", "40");
-  titleLabel.innerText = "Title";
-  contentLabel.innerText = "Content";
-  submitButton.innerText = "submit";
-  form.appendChild(titleLabel);
   form.appendChild(titleInput);
-  form.appendChild(contentLabel);
   form.appendChild(contentInput);
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
@@ -53,18 +38,12 @@ function projectForm() {
   const form = document.createElement("form");
   const titleInput = document.createElement("input");
   const submitButton = document.createElement("button");
-  const titleLabel = document.createElement("label");
   titleInput.required = true;
   form.method = "dialog";
   submitButton.type = "submit";
   form.classList.add("project-form");
   titleInput.classList.add("title-input");
   submitButton.classList.add("submit-button");
-  titleInput.id = "title";
-  titleLabel.setAttribute("for", "title");
-  titleLabel.innerText = "Title";
-  submitButton.innerText = "Submit";
-  form.appendChild(titleLabel);
   form.appendChild(titleInput);
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
@@ -84,34 +63,31 @@ function taskForm(object) {
   const descriptionInput = document.createElement("textarea");
   const dueDateInput = document.createElement("input");
   const priorityInput = document.createElement("input");
+  const stageInput = document.createElement("input");
   const submitButton = document.createElement("button");
-  const titleLabel = document.createElement("label");
-  const descriptionLabel = document.createElement("label");
-  const dueDateLabel = document.createElement("label");
-  const priorityLabel = document.createElement("label");
 
   form.classList.add("project-form");
   titleInput.classList.add("title-input");
   descriptionInput.classList.add("description-input");
   dueDateInput.classList.add("dueDate-input");
   priorityInput.classList.add("priority-input");
+  stageInput.classList.add("stage-input");
   submitButton.classList.add("submit-button");
 
   titleInput.required = true;
   descriptionInput.required = true;
   dueDateInput.required = true;
   priorityInput.required = true;
+  stageInput.required = true;
 
   form.method = "dialog";
   submitButton.type = "none";
-  form.appendChild(titleLabel);
+
   form.appendChild(titleInput);
-  form.appendChild(descriptionLabel);
   form.appendChild(descriptionInput);
-  form.appendChild(dueDateLabel);
   form.appendChild(dueDateInput);
-  form.appendChild(priorityLabel);
   form.appendChild(priorityInput);
+  form.appendChild(stageInput);
   form.appendChild(submitButton);
 
   submitButton.addEventListener("click", () => {
@@ -148,10 +124,7 @@ export function staticPage() {
   sideBarProjects.classList.add("projects-button");
   sideBarNotes.classList.add("notes-button");
 
-  header.innerText = "My TODO List";
-
-  header.innerText = "My TODO List";
-
+  sideBar.appendChild(sideBarHome);
   sideBar.appendChild(sideBarProjects);
   sideBar.appendChild(sideBarNotes);
   mainContainer.appendChild(dialog);
@@ -171,7 +144,6 @@ export function notesPage() {
   const newNoteButton = document.createElement("button");
   newNoteButton.classList.add("new-note", "new-button");
   noteContainer.classList.add("note-container");
-  newNoteButton.innerText = "New Note";
   contentContainer.appendChild(newNoteButton);
   contentContainer.appendChild(noteContainer);
   renderNotes();
@@ -186,7 +158,6 @@ export function projectsPage() {
   const newProjectButton = document.createElement("button");
   projectContainer.classList.add("project-container");
   newProjectButton.classList.add("new-project", "new-button");
-  newProjectButton.innerText = "New Project";
   contentContainer.appendChild(newProjectButton);
   contentContainer.appendChild(projectContainer);
 
