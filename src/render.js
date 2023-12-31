@@ -1,6 +1,4 @@
 import { myContainer } from "./container";
-import { note } from "./note";
-import { project, task } from "./project";
 const container = myContainer();
 function loadDialog(page, dialog) {
   dialog.innerHTML = "";
@@ -12,8 +10,6 @@ function noteForm() {
   const titleInput = document.createElement("input");
   const contentInput = document.createElement("textarea");
   const submitButton = document.createElement("button");
-  const titleLabel = document.createElement("label");
-  const contentLabel = document.createElement("label");
   titleInput.required = true;
   contentInput.required = true;
 
@@ -23,24 +19,11 @@ function noteForm() {
   titleInput.classList.add("title-input");
   contentInput.classList.add("content-input");
   submitButton.classList.add("submit-button");
-  titleLabel.classList.add("title-label", "form-label");
-  contentLabel.classList.add("content-label", "form-label");
-  titleInput.id = "title";
-  contentInput.id = "content";
-  titleLabel.setAttribute("for", "title");
-  contentLabel.setAttribute("for", "content");
-  contentInput.setAttribute("rows", "20");
-  contentInput.setAttribute("cols", "40");
-  titleLabel.innerText = "Title";
-  contentLabel.innerText = "Content";
-  submitButton.innerText = "submit";
-  form.appendChild(titleLabel);
   form.appendChild(titleInput);
-  form.appendChild(contentLabel);
   form.appendChild(contentInput);
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
-    if (titleInput.value && contentInput.value) {
+    if (titleInput.value) {
       container.addNote(titleInput.value, contentInput.value);
       renderNotes();
     } else {
@@ -53,18 +36,12 @@ function projectForm() {
   const form = document.createElement("form");
   const titleInput = document.createElement("input");
   const submitButton = document.createElement("button");
-  const titleLabel = document.createElement("label");
   titleInput.required = true;
   form.method = "dialog";
   submitButton.type = "submit";
   form.classList.add("project-form");
   titleInput.classList.add("title-input");
   submitButton.classList.add("submit-button");
-  titleInput.id = "title";
-  titleLabel.setAttribute("for", "title");
-  titleLabel.innerText = "Title";
-  submitButton.innerText = "Submit";
-  form.appendChild(titleLabel);
   form.appendChild(titleInput);
   form.appendChild(submitButton);
   submitButton.addEventListener("click", () => {
@@ -81,58 +58,34 @@ function projectForm() {
 function taskForm(object) {
   const form = document.createElement("form");
   const titleInput = document.createElement("input");
-  const descriptionInput = document.createElement("textarea");
+  const descriptionInput = document.createElement("input");
   const dueDateInput = document.createElement("input");
   const priorityInput = document.createElement("input");
+  const stageInput = document.createElement("input");
   const submitButton = document.createElement("button");
-  const titleLabel = document.createElement("label");
-  const descriptionLabel = document.createElement("label");
-  const dueDateLabel = document.createElement("label");
-  const priorityLabel = document.createElement("label");
 
   form.classList.add("project-form");
   titleInput.classList.add("title-input");
   descriptionInput.classList.add("description-input");
   dueDateInput.classList.add("dueDate-input");
   priorityInput.classList.add("priority-input");
+  stageInput.classList.add("stage-input");
   submitButton.classList.add("submit-button");
-
-  titleInput.id = "title";
-  descriptionInput.id = "description";
-  dueDateInput.id = "dueDate";
-  priorityInput.id = "priority";
-
-  titleLabel.setAttribute("for", "title");
-  descriptionLabel.setAttribute("for", "description");
-  dueDateLabel.setAttribute("for", "dueDate");
-  priorityLabel.setAttribute("for", "priority");
-
-  titleLabel.innerText = "Title";
-  descriptionLabel.innerText = "Description";
-  dueDateLabel.innerText = "Due date";
-  priorityLabel.innerText = "Urgent?";
-  submitButton.innerText = "Submit";
-
-  dueDateInput.type = "date";
-  priorityInput.type = "checkbox";
-  descriptionInput.setAttribute("rows", "10");
-  descriptionInput.setAttribute("cols", "20");
 
   titleInput.required = true;
   descriptionInput.required = true;
   dueDateInput.required = true;
   priorityInput.required = true;
+  stageInput.required = true;
 
   form.method = "dialog";
   submitButton.type = "none";
-  form.appendChild(titleLabel);
+
   form.appendChild(titleInput);
-  form.appendChild(descriptionLabel);
   form.appendChild(descriptionInput);
-  form.appendChild(dueDateLabel);
   form.appendChild(dueDateInput);
-  form.appendChild(priorityLabel);
   form.appendChild(priorityInput);
+  form.appendChild(stageInput);
   form.appendChild(submitButton);
 
   submitButton.addEventListener("click", () => {
@@ -142,7 +95,7 @@ function taskForm(object) {
         descriptionInput.value,
         dueDateInput.value,
         priorityInput.value,
-        false
+        stageInput.value
       );
       renderProjects();
     } else {
@@ -157,7 +110,7 @@ export function staticPage() {
   const sideBar = document.createElement("div");
   const contentContainer = document.createElement("div");
   const sideBarNotes = document.createElement("div");
-
+  const sideBarHome = document.createElement("div");
   const sideBarProjects = document.createElement("div");
   const dialog = document.createElement("dialog");
 
@@ -165,12 +118,11 @@ export function staticPage() {
   header.classList.add("header");
   sideBar.classList.add("sidebar");
   contentContainer.classList.add("content-container");
-
+  sideBarHome.classList.add("home-button");
   sideBarProjects.classList.add("projects-button");
   sideBarNotes.classList.add("notes-button");
 
-  header.innerText = "My TODO List";
-
+  sideBar.appendChild(sideBarHome);
   sideBar.appendChild(sideBarProjects);
   sideBar.appendChild(sideBarNotes);
   mainContainer.appendChild(dialog);
@@ -178,8 +130,9 @@ export function staticPage() {
   mainContainer.appendChild(sideBar);
   mainContainer.appendChild(contentContainer);
 
-  sideBarNotes.innerHTML = "NOTES";
-  sideBarProjects.innerHTML = "PROJECTS";
+  sideBarHome.innerHTML = "home";
+  sideBarNotes.innerHTML = "note";
+  sideBarProjects.innerHTML = "project";
   return mainContainer;
 }
 export function notesPage() {
@@ -189,7 +142,6 @@ export function notesPage() {
   const newNoteButton = document.createElement("button");
   newNoteButton.classList.add("new-note", "new-button");
   noteContainer.classList.add("note-container");
-  newNoteButton.innerText = "New Note";
   contentContainer.appendChild(newNoteButton);
   contentContainer.appendChild(noteContainer);
   renderNotes();
@@ -204,7 +156,6 @@ export function projectsPage() {
   const newProjectButton = document.createElement("button");
   projectContainer.classList.add("project-container");
   newProjectButton.classList.add("new-project", "new-button");
-  newProjectButton.innerText = "New Project";
   contentContainer.appendChild(newProjectButton);
   contentContainer.appendChild(projectContainer);
 
@@ -221,28 +172,17 @@ export function renderProjects() {
     const projectDiv = document.createElement("div");
     const projectTitleDiv = document.createElement("div");
     const projectContentDiv = document.createElement("div");
-    const footer = document.createElement("div");
     const newTaskButton = document.createElement("button");
-    const deleteProjectButton = document.createElement("button");
 
     projectDiv.classList.add("project-div");
     projectTitleDiv.classList.add("project-title-div");
     projectContentDiv.classList.add("project-content-div");
-    newTaskButton.classList.add("new-task-button", "new-button");
-    deleteProjectButton.classList.add("delete-project-button", "new-button");
-    footer.classList.add("footer");
-
-    newTaskButton.innerText = "New Task";
-    deleteProjectButton.innerText = "Delete Project";
+    newTaskButton.classList.add("new-task-button");
 
     projectDiv.dataset.index = container.projectList.indexOf(object);
 
     newTaskButton.addEventListener("click", () => {
       loadDialog(taskForm(object), dialog);
-    });
-    deleteProjectButton.addEventListener("click", () => {
-      container.removeProject(projectDiv.dataset.index);
-      renderProjects();
     });
 
     object.tasks.forEach((element) => {
@@ -255,11 +195,6 @@ export function renderProjects() {
       taskLabel.classList.add("task-label");
 
       taskLabel.innerText = element.title;
-      taskCheckBox.type = "checkbox";
-
-      if (taskCheckBox.checked) {
-        element.stage = true;
-      }
 
       taskDiv.appendChild(taskCheckBox);
       taskDiv.appendChild(taskLabel);
@@ -267,11 +202,9 @@ export function renderProjects() {
       projectContentDiv.appendChild(taskDiv);
     });
     projectTitleDiv.innerHTML = object.title;
-    footer.appendChild(newTaskButton);
-    footer.appendChild(deleteProjectButton);
     projectDiv.appendChild(projectTitleDiv);
     projectDiv.appendChild(projectContentDiv);
-    projectDiv.appendChild(footer);
+    projectDiv.appendChild(newTaskButton);
     projectContainer.appendChild(projectDiv);
   });
 }
@@ -283,27 +216,18 @@ function renderNotes() {
     const noteDiv = document.createElement("div");
     const noteTitle = document.createElement("div");
     const noteContent = document.createElement("div");
-    const deleteNoteButton = document.createElement("button");
 
     noteDiv.classList.add("note-div");
     noteTitle.classList.add("note-title");
     noteContent.classList.add("note-content");
-    deleteNoteButton.classList.add("delete-note-button", "new-button");
 
     noteDiv.dataset.index = container.noteList.indexOf(notes);
 
     noteTitle.innerText = notes.title;
     noteContent.innerText = notes.content;
-    deleteNoteButton.innerText = "Delete Note";
-
-    deleteNoteButton.addEventListener("click", () => {
-      container.removeNote(noteDiv.dataset.index);
-      renderNotes();
-    });
 
     noteDiv.appendChild(noteTitle);
     noteDiv.appendChild(noteContent);
-    noteDiv.appendChild(deleteNoteButton);
     noteContainer.appendChild(noteDiv);
     contentContainer.appendChild(noteContainer);
   });
