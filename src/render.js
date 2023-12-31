@@ -97,27 +97,6 @@ function taskForm(object) {
   priorityInput.classList.add("priority-input");
   submitButton.classList.add("submit-button");
 
-  titleInput.id = "title";
-  descriptionInput.id = "description";
-  dueDateInput.id = "dueDate";
-  priorityInput.id = "priority";
-
-  titleLabel.setAttribute("for", "title");
-  descriptionLabel.setAttribute("for", "description");
-  dueDateLabel.setAttribute("for", "dueDate");
-  priorityLabel.setAttribute("for", "priority");
-
-  titleLabel.innerText = "Title";
-  descriptionLabel.innerText = "Description";
-  dueDateLabel.innerText = "Due date";
-  priorityLabel.innerText = "Urgent?";
-  submitButton.innerText = "Submit";
-
-  dueDateInput.type = "date";
-  priorityInput.type = "checkbox";
-  descriptionInput.setAttribute("rows", "10");
-  descriptionInput.setAttribute("cols", "20");
-
   titleInput.required = true;
   descriptionInput.required = true;
   dueDateInput.required = true;
@@ -142,7 +121,7 @@ function taskForm(object) {
         descriptionInput.value,
         dueDateInput.value,
         priorityInput.value,
-        false
+        stageInput.value
       );
       renderProjects();
     } else {
@@ -171,6 +150,8 @@ export function staticPage() {
 
   header.innerText = "My TODO List";
 
+  header.innerText = "My TODO List";
+
   sideBar.appendChild(sideBarProjects);
   sideBar.appendChild(sideBarNotes);
   mainContainer.appendChild(dialog);
@@ -178,8 +159,9 @@ export function staticPage() {
   mainContainer.appendChild(sideBar);
   mainContainer.appendChild(contentContainer);
 
-  sideBarNotes.innerHTML = "NOTES";
-  sideBarProjects.innerHTML = "PROJECTS";
+  sideBarHome.innerHTML = "home";
+  sideBarNotes.innerHTML = "note";
+  sideBarProjects.innerHTML = "project";
   return mainContainer;
 }
 export function notesPage() {
@@ -228,12 +210,7 @@ export function renderProjects() {
     projectDiv.classList.add("project-div");
     projectTitleDiv.classList.add("project-title-div");
     projectContentDiv.classList.add("project-content-div");
-    newTaskButton.classList.add("new-task-button", "new-button");
-    deleteProjectButton.classList.add("delete-project-button", "new-button");
-    footer.classList.add("footer");
-
-    newTaskButton.innerText = "New Task";
-    deleteProjectButton.innerText = "Delete Project";
+    newTaskButton.classList.add("new-task-button");
 
     projectDiv.dataset.index = container.projectList.indexOf(object);
 

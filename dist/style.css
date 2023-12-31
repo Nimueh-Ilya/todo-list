@@ -51,6 +51,7 @@ body {
   grid-column: 2/3;
   background-color: aqua;
 }
+<<<<<<< HEAD
 .note-container {
   padding: 8px;
   height: auto;
@@ -120,6 +121,16 @@ body {
   color: var(--main-color);
   background-color: var(--secondary-color);
 }
+=======
+.notes-button:hover {
+  color: var(--main-color);
+  background-color: var(--secondary-color);
+}
+.projects-button:hover {
+  color: var(--main-color);
+  background-color: var(--secondary-color);
+}
+>>>>>>> fbb19846993d54f17e78ade109fe813f6b74b071
 .home-button:hover {
   color: var(--main-color);
   background-color: var(--secondary-color);
@@ -148,8 +159,11 @@ body {
   flex-direction: column;
   gap: 10px;
   align-items: center;
+<<<<<<< HEAD
 }
 .task-checkbox:checked + label {
   text-decoration: line-through;
   color: grey;
+=======
+>>>>>>> fbb19846993d54f17e78ade109fe813f6b74b071
 }
