@@ -1,17 +1,17 @@
 export class task {
-  constructor(title, description, dueDate, priority, stage) {
+  constructor(title, description, dueDate, priority, completed) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.stage = stage;
+    this.completed = completed;
   }
-  editTask(title, description, dueDate, priority, stage) {
+  editTask(title, description, dueDate, priority, completed) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.stage = stage;
+    this.completed = completed;
   }
 }
 export class project {

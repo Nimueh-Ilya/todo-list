@@ -7,6 +7,87 @@ function loadDialog(page, dialog) {
   dialog.appendChild(page);
   dialog.showModal();
 }
+function showTask(object) {
+  const form = document.createElement("form");
+  const titleInput = document.createElement("input");
+  const descriptionInput = document.createElement("textarea");
+  const dueDateInput = document.createElement("input");
+  const priorityInput = document.createElement("input");
+  const submitButton = document.createElement("button");
+  const titleLabel = document.createElement("label");
+  const descriptionLabel = document.createElement("label");
+  const dueDateLabel = document.createElement("label");
+  const priorityLabel = document.createElement("label");
+
+  form.classList.add("project-form");
+  titleInput.classList.add("title-input");
+  descriptionInput.classList.add("description-input");
+  dueDateInput.classList.add("dueDate-input");
+  priorityInput.classList.add("priority-input");
+  submitButton.classList.add("submit-button");
+
+  titleInput.id = "title";
+  descriptionInput.id = "description";
+  dueDateInput.id = "dueDate";
+  priorityInput.id = "priority";
+
+  titleInput.value = object.title;
+  descriptionInput.value = object.description;
+  dueDateInput.value = object.dueDate;
+  priorityInput.value = object.priority;
+
+  titleLabel.setAttribute("for", "title");
+  descriptionLabel.setAttribute("for", "description");
+  dueDateLabel.setAttribute("for", "dueDate");
+  priorityLabel.setAttribute("for", "priority");
+
+  titleLabel.innerText = "Title";
+  descriptionLabel.innerText = "Description";
+  dueDateLabel.innerText = "Due date";
+  priorityLabel.innerText = "Urgent?";
+  submitButton.innerText = "Edit";
+
+  dueDateInput.type = "date";
+  priorityInput.type = "checkbox";
+  descriptionInput.setAttribute("rows", "10");
+  descriptionInput.setAttribute("cols", "20");
+
+  titleInput.required = true;
+  descriptionInput.required = true;
+  dueDateInput.required = true;
+
+  form.method = "dialog";
+  submitButton.type = "none";
+  form.appendChild(titleLabel);
+  form.appendChild(titleInput);
+  form.appendChild(descriptionLabel);
+  form.appendChild(descriptionInput);
+  form.appendChild(dueDateLabel);
+  form.appendChild(dueDateInput);
+  form.appendChild(priorityLabel);
+  form.appendChild(priorityInput);
+  form.appendChild(submitButton);
+
+  submitButton.addEventListener("click", () => {
+    let urgency = false;
+    if (priorityInput.checked) {
+      urgency = true;
+    }
+    if (titleInput.value) {
+      object.editTask(
+        titleInput.value,
+        descriptionInput.value,
+        dueDateInput.value,
+        urgency,
+        object.completed
+      );
+      renderProjects();
+    } else {
+      return;
+    }
+  });
+  return form;
+}
 function noteForm() {
   const form = document.createElement("form");
   const titleInput = document.createElement("input");
@@ -121,7 +202,6 @@ function taskForm(object) {
   titleInput.required = true;
   descriptionInput.required = true;
   dueDateInput.required = true;
-  priorityInput.required = true;
 
   form.method = "dialog";
   submitButton.type = "none";
@@ -136,12 +216,16 @@ function taskForm(object) {
   form.appendChild(submitButton);
 
   submitButton.addEventListener("click", () => {
+    let urgency = false;
+    if (priorityInput.checked) {
+      urgency = true;
+    }
     if (titleInput.value) {
       object.addTask(
         titleInput.value,
         descriptionInput.value,
         dueDateInput.value,
-        priorityInput.value,
+        urgency,
         false
       );
       renderProjects();
@@ -247,22 +331,43 @@ export function renderProjects() {
 
     object.tasks.forEach((element) => {
       const taskDiv = document.createElement("div");
+      const deleteTaskButton = document.createElement("div");
       const taskCheckBox = document.createElement("input");
       const taskLabel = document.createElement("label");
 
+      deleteTaskButton.classList.add("remove-task");
       taskDiv.classList.add("task-div");
       taskCheckBox.classList.add("task-checkbox");
       taskLabel.classList.add("task-label");
 
       taskLabel.innerText = element.title;
+      deleteTaskButton.innerText = "X";
       taskCheckBox.type = "checkbox";
 
-      if (taskCheckBox.checked) {
-        element.stage = true;
+      taskCheckBox.addEventListener("click", () => {
+        if (taskCheckBox.checked) {
+          element.completed = true;
+        } else if (!taskCheckBox.checked) {
+          element.completed = false;
+        }
+      });
+      taskLabel.addEventListener("click", () => {
+        console.log(element);
+        loadDialog(showTask(element), dialog);
+      });
+      deleteTaskButton.addEventListener("click", () => {
+        object.removeTask(object.tasks.indexOf(element));
+        renderProjects();
+      });
+      if (element.completed) {
+        taskCheckBox.checked = true;
+      } else {
+        taskCheckBox.checked = false;
       }
 
       taskDiv.appendChild(taskCheckBox);
       taskDiv.appendChild(taskLabel);
+      taskDiv.appendChild(deleteTaskButton);
 
       projectContentDiv.appendChild(taskDiv);
     });
