@@ -277,14 +277,16 @@ export function homePage() {
   const urgentContainer = document.createElement("div");
 
   homeContainer.classList.add("home-container");
-  tasksContainer.classList.add("home-tasks");
-  nonUrgentContainer.classList.add("home-tasks");
-  urgentContainer.classList.add("home-tasks");
+  tasksContainer.classList.add("home-all-tasks");
+  nonUrgentContainer.classList.add("home-non-urgent");
+  urgentContainer.classList.add("home-urgent");
 
   homeContainer.appendChild(urgentContainer);
   homeContainer.appendChild(nonUrgentContainer);
   homeContainer.appendChild(tasksContainer);
   contentContainer.appendChild(homeContainer);
+
+  renderTasks();
 }
 export function notesPage() {
   const contentContainer = document.querySelector(".content-container");
@@ -372,7 +374,6 @@ export function renderProjects() {
         }
       });
       taskLabel.addEventListener("click", () => {
-        console.log(element);
         loadDialog(showTask(element), dialog);
       });
       deleteTaskButton.addEventListener("click", () => {
@@ -431,6 +432,58 @@ function renderNotes() {
     noteDiv.appendChild(deleteNoteButton);
     noteContainer.appendChild(noteDiv);
     contentContainer.appendChild(noteContainer);
+  });
+}
+function renderTasks() {
+  const urgentTab = document.querySelector(".home-urgent");
+  const nonUrgentTab = document.querySelector(".home-non-urgent");
+  const allTab = document.querySelector(".home-all-tasks");
+  container.taskList = [];
+  let urgentTasks = [];
+  let nonUrgentTasks = [];
+  container.projectList.forEach((object) => {
+    object.tasks.forEach((element) => {
+      container.taskList.push(element);
+    });
+  });
+  container.taskList.sort((a, b) => {
+    return Date.parse(a.dueDate) - Date.parse(b.dueDate);
+  });
+  container.taskList.forEach((element) => {
+    if (element.priority) {
+      urgentTasks.push(element);
+    }
+    if (!element.priority) {
+      nonUrgentTasks.push(element);
+    }
+    const taskNode = document.createElement("div");
+    const taskTitle = document.createElement("div");
+    const taskDueDate = document.createElement("div");
+    taskTitle.innerText = element.title;
+    taskDueDate.innerText = element.dueDate;
+    taskNode.appendChild(taskTitle);
+    taskNode.appendChild(taskDueDate);
+    allTab.appendChild(taskNode);
+  });
+  urgentTasks.forEach((element) => {
+    const taskNode = document.createElement("div");
+    const taskTitle = document.createElement("div");
+    const taskDueDate = document.createElement("div");
+    taskTitle.innerText = element.title;
+    taskDueDate.innerText = element.dueDate;
+    taskNode.appendChild(taskTitle);
+    taskNode.appendChild(taskDueDate);
+    urgentTab.appendChild(taskNode);
+  });
+  nonUrgentTasks.forEach((element) => {
+    const taskNode = document.createElement("div");
+    const taskTitle = document.createElement("div");
+    const taskDueDate = document.createElement("div");
+    taskTitle.innerText = element.title;
+    taskDueDate.innerText = element.dueDate;
+    taskNode.appendChild(taskTitle);
+    taskNode.appendChild(taskDueDate);
+    nonUrgentTab.appendChild(taskNode);
   });
 }
 function attributeUpdate(element, object, list) {

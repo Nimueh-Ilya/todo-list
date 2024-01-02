@@ -3,6 +3,7 @@ import { note } from "./note";
 export const myContainer = function container() {
   const projectList = [];
   const noteList = [];
+  const taskList = [];
   function addProject(title) {
     projectList.push(new project(title));
   }
@@ -24,5 +25,6 @@ export const myContainer = function container() {
     removeProject,
     projectList,
     noteList,
+    taskList,
   };
 };

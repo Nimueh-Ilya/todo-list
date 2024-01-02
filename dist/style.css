@@ -154,3 +154,7 @@ body {
   text-decoration: line-through;
   color: grey;
 }
+.home-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
