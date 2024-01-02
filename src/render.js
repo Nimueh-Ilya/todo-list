@@ -267,6 +267,13 @@ export function staticPage() {
   sideBarHome.innerText = "Home";
   sideBarNotes.innerText = "Notes";
   sideBarProjects.innerText = "Projects";
+  if (localStorage.getItem("projects")) {
+    container.projectList = JSON.parse(localStorage.getItem("projects"));
+  }
+  if (localStorage.getItem("notes")) {
+    container.noteList = JSON.parse(localStorage.getItem("notes"));
+  }
+
   return mainContainer;
 }
 export function homePage() {
@@ -318,8 +325,10 @@ export function projectsPage() {
     loadDialog(projectForm(), dialog);
     renderProjects();
   });
+  renderProjects();
 }
 export function renderProjects() {
+  localStorage.removeItem("projects");
   const projectContainer = document.querySelector(".project-container");
   const dialog = document.querySelector(".content-dialog");
   projectContainer.innerHTML = "";
@@ -350,7 +359,6 @@ export function renderProjects() {
       container.removeProject(projectDiv.dataset.index);
       renderProjects();
     });
-
     object.tasks.forEach((element) => {
       const taskDiv = document.createElement("div");
       const deleteTaskButton = document.createElement("div");
@@ -399,9 +407,11 @@ export function renderProjects() {
     projectDiv.appendChild(projectContentDiv);
     projectDiv.appendChild(footer);
     projectContainer.appendChild(projectDiv);
+    localStorage.setItem("projects", JSON.stringify(container.projectList));
   });
 }
 function renderNotes() {
+  localStorage.removeItem("notes");
   const noteContainer = document.querySelector(".note-container");
   const contentContainer = document.querySelector(".content-container");
   noteContainer.innerHTML = "";
@@ -432,6 +442,7 @@ function renderNotes() {
     noteDiv.appendChild(deleteNoteButton);
     noteContainer.appendChild(noteDiv);
     contentContainer.appendChild(noteContainer);
+    localStorage.setItem("notes", JSON.stringify(container.noteList));
   });
 }
 function renderTasks() {

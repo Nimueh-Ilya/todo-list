@@ -6,6 +6,7 @@ import {
   homePage,
 } from "./render";
 staticPage();
+projectsPage();
 const contentContainer = document.querySelector(".content-container");
 const homeButton = document.querySelector(".home-button");
 const projectButton = document.querySelector(".projects-button");
