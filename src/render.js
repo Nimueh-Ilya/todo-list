@@ -241,7 +241,7 @@ export function staticPage() {
   const sideBar = document.createElement("div");
   const contentContainer = document.createElement("div");
   const sideBarNotes = document.createElement("div");
-
+  const sideBarHome = document.createElement("div");
   const sideBarProjects = document.createElement("div");
   const dialog = document.createElement("dialog");
 
@@ -250,11 +250,13 @@ export function staticPage() {
   sideBar.classList.add("sidebar");
   contentContainer.classList.add("content-container");
 
+  sideBarHome.classList.add("home-button");
   sideBarProjects.classList.add("projects-button");
   sideBarNotes.classList.add("notes-button");
 
   header.innerText = "My TODO List";
 
+  sideBar.appendChild(sideBarHome);
   sideBar.appendChild(sideBarProjects);
   sideBar.appendChild(sideBarNotes);
   mainContainer.appendChild(dialog);
@@ -262,8 +264,9 @@ export function staticPage() {
   mainContainer.appendChild(sideBar);
   mainContainer.appendChild(contentContainer);
 
-  sideBarNotes.innerHTML = "NOTES";
-  sideBarProjects.innerHTML = "PROJECTS";
+  sideBarHome.innerText = "Home";
+  sideBarNotes.innerText = "Notes";
+  sideBarProjects.innerText = "Projects";
   return mainContainer;
 }
 export function notesPage() {
