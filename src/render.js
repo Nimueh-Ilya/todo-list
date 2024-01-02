@@ -269,6 +269,23 @@ export function staticPage() {
   sideBarProjects.innerText = "Projects";
   return mainContainer;
 }
+export function homePage() {
+  const contentContainer = document.querySelector(".content-container");
+  const homeContainer = document.createElement("div");
+  const tasksContainer = document.createElement("div");
+  const nonUrgentContainer = document.createElement("div");
+  const urgentContainer = document.createElement("div");
+
+  homeContainer.classList.add("home-container");
+  tasksContainer.classList.add("home-tasks");
+  nonUrgentContainer.classList.add("home-tasks");
+  urgentContainer.classList.add("home-tasks");
+
+  homeContainer.appendChild(urgentContainer);
+  homeContainer.appendChild(nonUrgentContainer);
+  homeContainer.appendChild(tasksContainer);
+  contentContainer.appendChild(homeContainer);
+}
 export function notesPage() {
   const contentContainer = document.querySelector(".content-container");
   const noteContainer = document.createElement("div");
